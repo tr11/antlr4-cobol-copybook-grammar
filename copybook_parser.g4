@@ -108,9 +108,29 @@ term:
     TERMINAL
     ;
 
+plus_minus:
+      PLUSCHAR      #plus
+    | MINUSCHAR     #minus
+    ;
+
+precision_9:
+      PRECISION_9_SIMPLE
+    | PRECISION_9_EXPLICIT_DOT
+    | PRECISION_9_DECIMAL_SCALED
+    | PRECISION_9_SCALED
+    | PRECISION_Z_EXPLICIT_DOT
+    | PRECISION_Z_DECIMAL_SCALED
+    | PRECISION_Z_SCALED
+    ;
+
+sign_precision_9_with_sign:
+      (precision_9 plus_minus?)     #trailing_sign
+    | (plus_minus? precision_9)     #leading_sign
+    ;
+
 sign_precision_9:
       NINES
-    | SIGN_PRECISION_9
+    | sign_precision_9_with_sign
     ;
 
 alpha_x:
@@ -149,7 +169,7 @@ skipLiteral:
     ;
 
 group:
-    section identifier (redefines | usage | occurs)? term
+    section identifier (redefines | usage | occurs)* term
     ;
 
 primitive:
