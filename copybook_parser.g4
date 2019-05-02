@@ -62,8 +62,16 @@ occurs_to:
     TO integerLiteral
     ;
 
+depending_on:
+    DEPENDING ON? identifier
+    ;
+
+indexed_by:
+    INDEXED BY? identifier
+    ;
+
 occurs:
-    OCCURS integerLiteral occurs_to? TIMES? (DEPENDING ON? identifier)? sorts? (INDEXED BY? identifier)?
+    OCCURS integerLiteral occurs_to? TIMES? depending_on? sorts? indexed_by?
     ;
 
 // redefines
@@ -140,17 +148,32 @@ skipLiteral:
     SKIP1 | SKIP2 | SKIP3
     ;
 
-item:
-      COMMENT
-    | term
-    | section
-      identifier
-      (justified | occurs | pic | redefines | usage | values | separate_sign)*
-      (BLANK WHEN? ZERO)?
-      term
-    | LEVEL_NUMBER_66 identifier renames term
-    | LEVEL_NUMBER_88 identifier values term
-    | skipLiteral
+group:
+    section identifier (redefines | usage | occurs)? term
     ;
 
+primitive:
+    section identifier
+    (justified | occurs | pic | redefines | usage | values | separate_sign)*
+    (BLANK WHEN? ZERO)?
+    term
+    ;
+
+level66statement:
+    LEVEL_NUMBER_66 identifier renames term
+    ;
+
+level88statement:
+    LEVEL_NUMBER_88 identifier values term
+    ;
+
+item:
+      COMMENT
+    | group
+    | primitive
+    | level66statement
+    | level88statement
+    | skipLiteral
+    | term
+    ;
 
