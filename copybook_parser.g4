@@ -114,13 +114,14 @@ plus_minus:
     ;
 
 precision_9:
-      PRECISION_9_SIMPLE
-    | PRECISION_9_EXPLICIT_DOT
-    | PRECISION_9_DECIMAL_SCALED
-    | PRECISION_9_SCALED
-    | PRECISION_Z_EXPLICIT_DOT
-    | PRECISION_Z_DECIMAL_SCALED
-    | PRECISION_Z_SCALED
+      PRECISION_9_SIMPLE            #precision_9_simple
+    | PRECISION_9_EXPLICIT_DOT      #precision_9_explicit_dot
+    | PRECISION_9_DECIMAL_SCALED    #precision_9_decimal_scaled
+    | PRECISION_9_SCALED            #precision_9_scaled
+    | PRECISION_9_SCALED_LEAD       #precision_9_scaled_lead
+    | PRECISION_Z_EXPLICIT_DOT      #precision_z_explicit_dot
+    | PRECISION_Z_DECIMAL_SCALED    #precision_z_decimal_scaled
+    | PRECISION_Z_SCALED            #precision_z_scaled
     ;
 
 sign_precision_9_with_sign:
